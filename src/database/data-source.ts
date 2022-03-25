@@ -1,7 +1,5 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import {CreateTask1648181159051 } from "./migration/CreateTask"
-import { CreateUser1648224139821 } from "./migration/CreateUser"
 export const PostgresDataSource = new DataSource({
     type: "postgres",
     host: process.env.TYPEORM_HOST,
@@ -12,7 +10,8 @@ export const PostgresDataSource = new DataSource({
     logNotifications: true,
     synchronize: true,
     logging: false,
+    migrationsRun:true,
     entities: [],
-    migrations: [CreateTask1648181159051,CreateUser1648224139821],
-    subscribers: [],
+    migrations: ["src/database/migration/*.ts"],
+    subscribers: ["src/database/entity/*.ts"],
 });
