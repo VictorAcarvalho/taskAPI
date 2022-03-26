@@ -1,15 +1,21 @@
-import {Request, response, Response} from 'express'; 
-import { CreateUserService } from '../services/CreateUserServices';
+import { Request, Response } from "express";
+import { User } from "../database/entity/User";
+import  UserAlreadyExistException  from "../exceptions/userExceptions";
+import { userServices } from "../services/CreateUserServices";
 
-export class UserController{
-    async handle(req:Request, res:Response){
-        const {name} = req.body;
-        const service = new CreateUserService();
-        const result = await service.execute({name});
-
-        if(result instanceof Error){
-            return response.status(401).json(result.message);
-        }
-        return response.status(201).json(result);
-    };
-};
+export class UserController {
+  async handle(req: Request, res: Response) {
+    try {
+      const result = await userServices.CreateUser(req.body);
+      return res.status(201).json(result);
+    } catch (error) {
+      if (error == UserAlreadyExistException) {
+        console.log(error)
+        return res.status(error.status).json({ message: error.message });
+      } else {
+          console.log(error)
+        return res.status(500).json({ message: "Internal server erro" });
+      }
+    }
+  }
+}

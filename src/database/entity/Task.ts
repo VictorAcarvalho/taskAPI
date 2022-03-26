@@ -1,4 +1,4 @@
-import {PrimaryColumn, Column , Entity , CreateDateColumn, ManyToOne, JoinColumn } from "typeorm";
+import {PrimaryColumn, Column , Entity , CreateDateColumn, ManyToOne } from "typeorm";
 import {v4 as uuid} from 'uuid';
 import { User } from './User'
 @Entity("task")
@@ -12,19 +12,8 @@ export class Task{
     @Column()
     content:string;
     
-    @Column()
-    user_id:string
-
-    @Column()
-    user_name:string
-
-    @ManyToOne(()=> User)
-    @JoinColumn({name:"user_id"})
+    @ManyToOne(() => User, (user:User) => user.tasks)
     user: User;
-
-    @ManyToOne(()=>User)
-    @JoinColumn({name:"user_name"})
-    userName : User;
 
     @CreateDateColumn()
     crated_at: Date;

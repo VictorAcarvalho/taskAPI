@@ -1,23 +1,22 @@
-import {PostgresDataSource} from '../database/data-source';
-import { User } from '../database/entity/User';
+import { PostgresDataSource } from "../database/data-source";
+import UserAlreadyExistException from "../exceptions/userExceptions";
+import { User } from "../database/entity/User";
 
-interface IUserRequest {
-    name:string;
-};
+class UserServices {
+  CreateUser = async (user: User) => {
+    const userRepository = await PostgresDataSource.getRepository(User);
 
-export class CreateUserService{
-    async execute({name}:IUserRequest):Promise<User | Error>{
-        const repo = PostgresDataSource.getRepository(User);
-        
-        if(await repo.findOneBy({name:name})){
-            return new Error ("The user already exist");
-        }
-
-        const user = await repo.create({
-            name
-        });
-        
-        await repo.save(user);
-        return user;
+    if (
+      await userRepository.findOneBy({
+        name: user.name,
+      })
+    ) {
+      throw new UserAlreadyExistException("User already exists");
     }
-};
+    const userCreated = await userRepository.create(user)
+    const userSaved = await userRepository.save(userCreated);
+    return userSaved;
+  };
+}
+
+export const userServices = new UserServices();
