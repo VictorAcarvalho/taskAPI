@@ -6,7 +6,7 @@ import { taskServices } from '../services/TaskServices';
      async create(req:Request, res:Response){
         try {
             const {user} = req.params ; 
-            const result = await taskServices.CreateTask(req.body,user);
+            const result = await taskServices.Create(req.body,user);
             return res.status(201).json(result);
 
         } catch (error) {
@@ -14,6 +14,19 @@ import { taskServices } from '../services/TaskServices';
         }
         
      }
+
+     async list(req:Request , res:Response){
+         try {
+             const result= await taskServices.List()
+             return res.status(200).json(result);
+             
+         } catch (error) {
+            console.log(error)
+            return res.json({message:"Internal server error"});     
+         }
+     }
 };
+
+
 
 export const taskController = new TaskController();

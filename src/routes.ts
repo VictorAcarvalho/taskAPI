@@ -10,6 +10,7 @@ routes.get("/user/:user", userController.find);
 routes.put("/user/:user", userController.update);
 routes.delete("/user/:user" , userController.delete);
 
+//Task Routes
 routes.post("/task/:user",taskController.create);
-
+routes.get("/tasks",taskController.list);
 export { routes };
