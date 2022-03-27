@@ -7,7 +7,8 @@ const routes = Router();
 routes.post("/userstore", userController.create);
 routes.get("/users",userController.list);
 routes.get("/user/:user", userController.findUniqueUser);
-
+routes.put("/user/:user", userController.updateUser);
+routes.delete("/user/:user");
 
 routes.post("/task/:user",taskController.create);
 

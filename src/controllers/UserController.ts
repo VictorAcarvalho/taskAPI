@@ -40,6 +40,19 @@ class UserController {
     }
 
   }
+
+  async updateUser(req:Request,res:Response){
+    try {
+      const {user} =  req.params;
+      const {name} = req.body;
+      const result = await userServices.UpdateUser(user,name);
+      return res.status(200).json(result)
+      
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({message:"Internal server error!"});      
+    }
+  }
 }
 
 export const userController = new UserController();

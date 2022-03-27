@@ -35,6 +35,13 @@ class UserServices {
     return user;
   };
 
+  UpdateUser = async(userId,content) =>{
+      const user = await userRepository.findOneBy({id:userId});
+      const merge = await userRepository.merge(user,user.name=content);
+      const result = await userRepository.save(merge);
+      return result;
+  };
+
   };
 
 export const userServices = new UserServices()
