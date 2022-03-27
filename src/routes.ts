@@ -4,9 +4,9 @@ import { taskController } from './controllers/TaskControllers';
 
 const routes = Router();
 //User Routes
-routes.post("/user", userController.create);
+routes.post("/userstore", userController.create);
 routes.get("/users",userController.list);
-routes.get("/user/:id", userController.findOne);
+routes.get("/user/:user", userController.findUniqueUser);
 
 
 routes.post("/task/:user",taskController.create);

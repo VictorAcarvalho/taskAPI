@@ -28,9 +28,10 @@ class UserController {
     }
   }
 
-  async findOne(req:Request,res:Response){
-    const {user} = req.params
+  async findUniqueUser(req:Request,res:Response){
     try {
+      const {user} = req.params;
+      console.log(user);
       const result = await userServices.FindUser(user);
       return res.status(200).json(result);
     } catch (error) {
