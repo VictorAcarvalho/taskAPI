@@ -37,6 +37,25 @@ import { taskServices } from '../services/TaskServices';
         } 
          
      }
+     
+     async update(req:Request, res:Response){
+         try {
+             const result = await taskServices.Update(req.params,req.body);
+             return res.status(200).json(result);             
+         } catch (error) {
+             return res.status(500).json({msg:"Internal Error"});
+         }
+     }
+
+     async delete (req:Request, res:Response){
+         try {
+            const  {task} = req.params
+             const result = await taskServices.Delete(task);
+             return res.status(200).json({msg:"Task deleted"});
+         } catch (error) {
+             return res.status(500).json({ msg:"Internal error"});
+         }
+     }
 };
 
 

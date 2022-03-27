@@ -35,7 +35,7 @@ class UserServices {
     return user;
   };
 
-  Update = async(userId,content) =>{
+  Update = async(userId:string,content) =>{
       const user = await userRepository.findOneBy({id:userId});
       const merge = await userRepository.merge(user,user.name=content);
       const result = await userRepository.save(merge);

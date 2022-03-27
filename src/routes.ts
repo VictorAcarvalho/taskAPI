@@ -14,4 +14,6 @@ routes.delete("/user/:user" , userController.delete);
 routes.post("/task/:user",taskController.create);
 routes.get("/tasks",taskController.list);
 routes. get("/task/:task",taskController.find);
+routes.put("/task/:task", taskController.update);
+routes.delete("/task/:task",taskController.delete );
 export { routes };
