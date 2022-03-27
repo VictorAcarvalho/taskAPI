@@ -40,9 +40,16 @@ import { taskServices } from '../services/TaskServices';
      
      async update(req:Request, res:Response){
          try {
-             const result = await taskServices.Update(req.params,req.body);
+             const {task} =req.params;
+             const {title,content} = req.body;
+             const reqObjt = {
+                 title,
+                 content
+             }
+             const result = await taskServices.Update(reqObjt,task);
              return res.status(200).json(result);             
          } catch (error) {
+             console.log(error);
              return res.status(500).json({msg:"Internal Error"});
          }
      }
