@@ -2,10 +2,12 @@ import { PostgresDataSource } from "../database/data-source";
 import UserAlreadyExistException from "../exceptions/userExceptions";
 import { User } from "../database/entity/User";
 
-class UserServices {
-  CreateUser = async (user: User) => {
-    const userRepository = await PostgresDataSource.getRepository(User);
+const userRepository = PostgresDataSource.getRepository(User);
 
+class UserServices {
+  
+  CreateUser = async (user: User) => {
+    
     if (
       await userRepository.findOneBy({
         name: user.name,
@@ -17,6 +19,11 @@ class UserServices {
     const userSaved = await userRepository.save(userCreated);
     return userSaved;
   };
+
+  ListAllUsers = async () => {
+     const users = await userRepository.find();
+     return users;
+  }
 }
 
 export const userServices = new UserServices();
