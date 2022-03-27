@@ -5,7 +5,7 @@ import { userServices } from "../services/UserServices";
 class UserController {
   async create(req: Request, res: Response) {
     try {
-      const result = await userServices.CreateUser(req.body);
+      const result = await userServices.Create(req.body);
       return res.status(201).json(result);
     } catch (error) {
       if (error == UserAlreadyExistException) {
@@ -20,7 +20,7 @@ class UserController {
 
   async list(req: Request, res: Response) {
     try {
-      const result = await userServices.ListAllUsers();
+      const result = await userServices.List();
       return res.status(200).json(result);
     } catch (error) {
       console.log(error);
@@ -28,11 +28,11 @@ class UserController {
     }
   }
 
-  async findUniqueUser(req:Request,res:Response){
+  async find(req:Request,res:Response){
     try {
       const {user} = req.params;
       console.log(user);
-      const result = await userServices.FindUser(user);
+      const result = await userServices.Find(user);
       return res.status(200).json(result);
     } catch (error) {
       console.log(error);
@@ -41,16 +41,27 @@ class UserController {
 
   }
 
-  async updateUser(req:Request,res:Response){
+  async update(req:Request,res:Response){
     try {
       const {user} =  req.params;
       const {name} = req.body;
-      const result = await userServices.UpdateUser(user,name);
+      const result = await userServices.Update(user,name);
       return res.status(200).json(result)
       
     } catch (error) {
       console.log(error)
       return res.status(500).json({message:"Internal server error!"});      
+    }
+  }
+
+  async delete(req:Request,res:Response){
+    try {
+      const {user} = req.params;
+      const result = await userServices.Delete(user);
+      return res.status(201).json({message:`User deleted`});
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({ message:"Internal Error"});
     }
   }
 }

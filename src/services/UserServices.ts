@@ -5,7 +5,7 @@ import { User } from "../database/entity/User";
 const userRepository =  PostgresDataSource.getRepository(User);
 
 class UserServices {
-  CreateUser = async (user: User) => {
+  Create = async (user: User) => {
     if (
       await userRepository.findOneBy({
         name: user.name,
@@ -18,12 +18,12 @@ class UserServices {
     return userSaved;
   };
 
-  ListAllUsers = async () => {
+  List = async () => {
     const users = await userRepository.find();
     return users;
   };
 
-  FindUser = async (userId:string ) =>{
+  Find = async (userId:string ) =>{
     const user = await userRepository.find({
       where:{
         id:userId
@@ -35,10 +35,15 @@ class UserServices {
     return user;
   };
 
-  UpdateUser = async(userId,content) =>{
+  Update = async(userId,content) =>{
       const user = await userRepository.findOneBy({id:userId});
       const merge = await userRepository.merge(user,user.name=content);
       const result = await userRepository.save(merge);
+      return result;
+  };
+
+  Delete =async (userId:string) => {
+      const result = await userRepository.delete(userId)
       return result;
   };
 

@@ -6,9 +6,9 @@ const routes = Router();
 //User Routes
 routes.post("/userstore", userController.create);
 routes.get("/users",userController.list);
-routes.get("/user/:user", userController.findUniqueUser);
-routes.put("/user/:user", userController.updateUser);
-routes.delete("/user/:user");
+routes.get("/user/:user", userController.find);
+routes.put("/user/:user", userController.update);
+routes.delete("/user/:user" , userController.delete);
 
 routes.post("/task/:user",taskController.create);
 
