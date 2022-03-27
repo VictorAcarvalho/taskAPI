@@ -25,6 +25,18 @@ import { taskServices } from '../services/TaskServices';
             return res.json({message:"Internal server error"});     
          }
      }
+
+     async find(req:Request, res:Response){
+        try {
+            const {task} =req.params;
+            const result = await taskServices.Find(task);
+            return res.status(200).json(result);
+        } catch (error) {   
+            console.log(error)
+            res.status(500).json({messga:"Internal error!"});
+        } 
+         
+     }
 };
 
 

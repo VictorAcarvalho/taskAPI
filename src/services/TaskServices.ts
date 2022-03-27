@@ -1,25 +1,23 @@
 import { PostgresDataSource } from "../database/data-source";
-import { Task } from '../database/entity/Task';
+import { Task } from "../database/entity/Task";
 import { User } from "../database/entity/User";
 
-interface Itask{
-  content:string;
+interface Itask {
+  content: string;
   title: string;
-  user: object
+  user: object;
 }
 
-
 const userRepository = PostgresDataSource.getRepository(User);
-const taskRepository =  PostgresDataSource.getRepository(Task);
+const taskRepository = PostgresDataSource.getRepository(Task);
 class TaskServices {
-  
-  Create = async (task, userId:string) => {
-    const user= await userRepository.findOneBy({id:userId});
-     const taskObject:Itask={
-        content:task.content,
-        title:task.title,
-        user
-     };
+  Create = async (task, userId: string) => {
+    const user = await userRepository.findOneBy({ id: userId });
+    const taskObject: Itask = {
+      content: task.content,
+      title: task.title,
+      user,
+    };
     const taskCreated = await taskRepository.create(taskObject);
     const taskSaved = await taskRepository.save(taskCreated);
     return taskSaved;
@@ -27,11 +25,21 @@ class TaskServices {
 
   List = async () => {
     return await taskRepository.find({
-      relations:{
-        user:true
-      }
+      relations: {
+        user: true,
+      },
     });
-  }
+  };
+
+  Find = async (taskId: string) => {
+    const task = await taskRepository.find({
+      where: { id: taskId },
+      relations: {
+        user: true,
+      },
+    });
+    return task;
+  };
 }
 
 export const taskServices = new TaskServices();
