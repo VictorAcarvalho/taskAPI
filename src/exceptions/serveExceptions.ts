@@ -1,4 +1,4 @@
-export default class serverException extends Error {
+export default class NullDataException extends Error {
     status:number
    
     constructor(message) {
@@ -9,6 +9,6 @@ export default class serverException extends Error {
   
       
       Error.captureStackTrace(this, this.constructor);
-      this.status = 500;
+      this.status = 400;
     }
   };

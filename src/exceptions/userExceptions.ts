@@ -12,3 +12,4 @@ export default class UserAlreadyExistException extends Error {
       this.status = 400;
     }
   };
+  
