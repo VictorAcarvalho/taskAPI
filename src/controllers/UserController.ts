@@ -27,6 +27,18 @@ class UserController {
       return res.status(500).json({ message: "Internal server erro" });
     }
   }
+
+  async findOne(req:Request,res:Response){
+    const {user} = req.params
+    try {
+      const result = await userServices.FindUser(user);
+      return res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({message:"Internal server erro"});
+    }
+
+  }
 }
 
 export const userController = new UserController();

@@ -24,6 +24,19 @@ class UserServices {
      const users = await userRepository.find();
      return users;
   }
+
+  FindUser = async ( userId:string ) =>{
+      const user = await userRepository.find({
+        where:{
+          id: userId
+        },
+        relations:{
+          tasks:true
+        }
+      });
+      return user;
+      
+  }
 }
 
 export const userServices = new UserServices();

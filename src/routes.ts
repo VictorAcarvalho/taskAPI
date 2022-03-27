@@ -6,6 +6,7 @@ const routes = Router();
 //User Routes
 routes.post("/user", userController.create);
 routes.get("/users",userController.list);
+routes.get("/user/:id", userController.findOne);
 
 
 routes.post("/task/:user",taskController.create);
