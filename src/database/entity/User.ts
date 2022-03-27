@@ -10,7 +10,8 @@ export class User{
     name:string;
 
     @OneToMany(()=>Task,(task:Task)=>task.user)
-     tasks: Task[];   
+     tasks: Task[]; 
+       
     constructor(){
         if(!this.id){
             this.id = uuid();

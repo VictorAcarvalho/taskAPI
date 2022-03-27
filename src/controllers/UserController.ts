@@ -3,8 +3,8 @@ import { User } from "../database/entity/User";
 import  UserAlreadyExistException  from "../exceptions/userExceptions";
 import { userServices } from "../services/CreateUserServices";
 
-export class UserController {
-  async handle(req: Request, res: Response) {
+ class UserController {
+  async create(req: Request, res: Response) {
     try {
       const result = await userServices.CreateUser(req.body);
       return res.status(201).json(result);
@@ -18,4 +18,6 @@ export class UserController {
       }
     }
   }
-}
+};
+
+export const userController = new UserController();

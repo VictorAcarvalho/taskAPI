@@ -12,7 +12,7 @@ PostgresDataSource
     console.log("Data source has been initialized!");
 })
 .catch((err)=>{
-    console.log("XABLAU",err);
+    console.log("Data source Error! ",err);
 });
 
 app.use(express.json());

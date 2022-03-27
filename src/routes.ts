@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { UserController} from "./controllers/UserController";
+import { userController} from "./controllers/UserController";
+import { taskController } from './controllers/TaskControllers';
 
 const routes = Router();
 
-routes.post("/user", new UserController().handle); 
+routes.post("/user", userController.create); 
+routes.post("/task/:user",taskController.create);
 
 export { routes };

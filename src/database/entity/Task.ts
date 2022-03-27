@@ -11,11 +11,15 @@ export class Task{
 
     @Column()
     content:string;
-    
+        
     @ManyToOne(() => User, (user:User) => user.tasks)
     user: User;
 
     @CreateDateColumn()
-    crated_at: Date;
+    created_at: Date;
 
+    constructor(){
+        if(!this.id){
+            this.id = uuid();
+        }};
 };
