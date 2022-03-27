@@ -1,7 +1,7 @@
 import { PostgresDataSource } from "../database/data-source";
 import { Task } from "../database/entity/Task";
 import { User } from "../database/entity/User";
-
+import NullDataException from '../exceptions/serveExceptions';
 interface Itask {
   content: string;
   title: string;
@@ -12,6 +12,12 @@ const userRepository = PostgresDataSource.getRepository(User);
 const taskRepository = PostgresDataSource.getRepository(Task);
 class TaskServices {
   Create = async (task, userId: string) => {
+    if (userId == null || task == null) {
+      throw new NullDataException(
+        "There are parameters that were not declared correctly"
+      );
+    }
+    
     const user = await userRepository.findOneBy({ id: userId });
     const taskObject: Itask = {
       content: task.content,
@@ -32,6 +38,11 @@ class TaskServices {
   };
 
   Find = async (taskId: string) => {
+    if (taskId == null) {
+      throw new NullDataException(
+        "There are parameters that were not declared correctly"
+      );
+    }
     const task = await taskRepository.find({
       where: { id: taskId },
       relations: {
@@ -42,7 +53,11 @@ class TaskServices {
   };
 
   Update =async (content, taskId:string) => {
-      
+    if (taskId == null || content == null) {
+      throw new NullDataException(
+        "There are parameters that were not declared correctly"
+      );
+    }
       const task = await taskRepository.findOneBy({id:taskId});
       const ObjTask ={
         title: content.title,
@@ -54,6 +69,11 @@ class TaskServices {
   }
 
   Delete =async(taskId) =>{
+    if (taskId == null) {
+      throw new NullDataException(
+        "There are parameters that were not declared correctly"
+      );
+    }
     const result = await taskRepository.delete(taskId);
     return result;
   }

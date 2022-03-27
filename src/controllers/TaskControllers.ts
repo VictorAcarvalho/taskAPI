@@ -1,6 +1,6 @@
 import {Request, Response } from "express";
 import { taskServices } from '../services/TaskServices';
-
+import NullDataException from '../exceptions/serveExceptions';
 
  class TaskController {
      async create(req:Request, res:Response){
@@ -10,7 +10,14 @@ import { taskServices } from '../services/TaskServices';
             return res.status(201).json(result);
 
         } catch (error) {
-            return res.status(500).json({message:"Internal erro in task creation"});
+            if (error == NullDataException) {
+                console.log(error);
+                return res.status(error.status).json({messgae:error.message});
+            }
+            else {
+              console.log(error);
+              return res.status(500).json({ message: "Internal server erro" });
+            }
         }
         
      }
@@ -32,8 +39,14 @@ import { taskServices } from '../services/TaskServices';
             const result = await taskServices.Find(task);
             return res.status(200).json(result);
         } catch (error) {   
-            console.log(error)
-            res.status(500).json({messga:"Internal error!"});
+            if (error == NullDataException) {
+                console.log(error);
+                return res.status(error.status).json({messgae:error.message});
+            }
+            else {
+              console.log(error);
+              return res.status(500).json({ message: "Internal server erro" });
+            }
         } 
          
      }
@@ -49,8 +62,14 @@ import { taskServices } from '../services/TaskServices';
              const result = await taskServices.Update(reqObjt,task);
              return res.status(200).json(result);             
          } catch (error) {
-             console.log(error);
-             return res.status(500).json({msg:"Internal Error"});
+            if (error == NullDataException) {
+                console.log(error);
+                return res.status(error.status).json({messgae:error.message});
+            }
+            else {
+              console.log(error);
+              return res.status(500).json({ message: "Internal server erro" });
+            }
          }
      }
 
@@ -60,7 +79,14 @@ import { taskServices } from '../services/TaskServices';
              const result = await taskServices.Delete(task);
              return res.status(200).json({msg:"Task deleted"});
          } catch (error) {
-             return res.status(500).json({ msg:"Internal error"});
+            if (error == NullDataException) {
+                console.log(error);
+                return res.status(error.status).json({messgae:error.message});
+            }
+            else {
+              console.log(error);
+              return res.status(500).json({ message: "Internal server erro" });
+            };
          }
      }
 };

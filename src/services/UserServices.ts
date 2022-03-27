@@ -7,17 +7,17 @@ const userRepository = PostgresDataSource.getRepository(User);
 
 class UserServices {
   Create = async (user: User) => {
+    if (user == null) {
+      throw new NullDataException(
+        "There are parameters that were not declared correctly"
+      );
+    }
     if (
       await userRepository.findOneBy({
         name: user.name,
       })
     ) {
       throw new UserAlreadyExistException("User already exists");
-    }
-    if (user == null) {
-      throw new NullDataException(
-        "There are parameters that were not declared correctly"
-      );
     }
     const userCreated = await userRepository.create(user);
     const userSaved = await userRepository.save(userCreated);
@@ -47,7 +47,7 @@ class UserServices {
   };
 
   Update = async (userId: string, content) => {
-    if (userId == null && content == null) {
+    if (userId == null || content == null) {
       throw new NullDataException(
         "There are parameters that were not declared correctly"
       );
