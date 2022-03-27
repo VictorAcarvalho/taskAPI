@@ -12,12 +12,12 @@ interface Itask{
 const userRepository = PostgresDataSource.getRepository(User);
 class TaskServices {
   
-  CreateTask = async (task, userName:string) => {
+  CreateTask = async (task, userId:string) => {
     const taskRepository =  PostgresDataSource.getRepository(Task);
-    const user= await userRepository.findOneBy({name:userName});
+    const user= await userRepository.findOneBy({id:userId});
      const taskObject:Itask={
-        content:task,
-        title:task,
+        content:task.content,
+        title:task.title,
         user
      };
     const taskCreated = await taskRepository.create(taskObject);
