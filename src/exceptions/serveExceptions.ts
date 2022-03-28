@@ -9,6 +9,6 @@ export default class NullDataException extends Error {
   
       
       Error.captureStackTrace(this, this.constructor);
-      this.status = 400;
+      this.status = 406;
     }
   };
