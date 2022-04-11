@@ -1,6 +1,6 @@
-# Desafio técnico Mobicare + Arkoss -  Estágio Backend NodeJS
+# API Task
 
-- O desafio consiste em criar uma api de tarefas, onde cada tarefa devera possuir nome, conteúdo, autor e data de criação.
+-  API de tarefas, onde cada tarefa devera possuir nome, conteúdo, autor e data de criação.
 
 ### Comandos para executar a aplicação
 
@@ -291,6 +291,7 @@
     }
 
     ```
+    
 ## Atualização de tarefa
 
 - Método : `Put`
@@ -326,6 +327,7 @@
     }
 
     ```
+
 ## Deletar uma tarefa
 
 - Método : `Delete`
